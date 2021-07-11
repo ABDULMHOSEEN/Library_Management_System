@@ -20,7 +20,8 @@ menu = "\nLibrary Management System\n" \
 # set choice to zero to use it in while than ask user to change it
 choice = 0
 # use the while loop to make the program take an input from the user until number 7 is entered which is the exit choice
-while choice != 7:
+running = True
+while running:
     # print the menu every time
     print(menu)
     # ask the user to choose a number from the menu
@@ -135,7 +136,7 @@ while choice != 7:
     if choice == 3:
         # This choice will allow you to add a new book
         # ask for a serial number
-        serial_number = input("Enter serial number: ")
+        serial_number = input("Enter serial number made from 5 digit: ")
         # ask for the title of the book
         title = input("Enter book title: ")
         # ask for author name or names and set a counter
@@ -145,7 +146,7 @@ while choice != 7:
         # check6 is one of the check steps
         check6 = False
         while author != "q" and author != "Q":
-            author = input("Enter name of author %d:" % counter)
+            author = input("Enter name of author %d or q to stop:" % counter)
             # if user put q it will stop here
             if author == "q" or author == "Q":
                 break
@@ -418,6 +419,12 @@ while choice != 7:
         else:
             # if there is no mach print error
             print("Error: no matched record found in borrowedInfo.txt")
+
+    if choice == 7:
+        print("❤"*32)
+        print("☺ Thanks for using our Library Management System ☺")
+        print("❤" * 32)
+        running = False
     if str(choice) not in "1234567":
         print("Invalid input")
 booksInfo.close()
