@@ -2,7 +2,7 @@
 menu = "\nLibrary Management System\n" \
        "==============================\n" \
        "1. Print books info\n" \
-       "2. Search a book\n" \
+       "2. Search for a book\n" \
        "3. Add new book\n" \
        "4. Remove a book\n" \
        "5. Borrow a book\n" \
@@ -31,7 +31,7 @@ def bankAccount(price):
 
 # do the user's order
 # number 1
-def number_1():
+def print_books_info():
     # open the files that we will use
     booksInfo = open("booksInfo.txt", "a+")
     booksInfo.seek(0)
@@ -44,7 +44,9 @@ def number_1():
     print("\nTotal %d books:" % number_of_books,
           "\n##############################################")
     # read the list as save each info
+    counter = 0
     for book in books_info:
+        counter += 1
         if book != "\n":
             book = book.split(",")
             serial_number = book[0]
@@ -57,14 +59,15 @@ def number_1():
             print("price: ", price)
             total_copies = int(book[4]) + int(book[5])
             print("total copies: ", total_copies)
-            print("##############################################\n")
+            if counter != number_of_books:
+                print("##############################################\n")
     booksInfo.close()
     # return True to let the while running
     return True
 
 
 # number 2
-def number_2():
+def search_for_book():
     # open the files that we will use
     booksInfo = open("booksInfo.txt", "a+")
     booksInfo.seek(0)
@@ -153,7 +156,7 @@ def number_2():
 
 
 # number 3
-def number_3():
+def add_new_book():
     # open the files that we will use
     booksInfo = open("booksInfo.txt", "a+")
     booksInfo.seek(0)
@@ -253,7 +256,7 @@ def number_3():
 
 
 # number 4
-def number_4():
+def remove_book():
     # open the files that we will use
     booksInfo = open("booksInfo.txt", "a+")
     booksInfo.seek(0)
@@ -314,7 +317,7 @@ def number_4():
 
 
 # number 5
-def number_5():
+def borrow_book():
     # open the files that we will use
     booksInfo = open("booksInfo.txt", "a+")
     booksInfo.seek(0)
@@ -414,7 +417,7 @@ def number_5():
 
 
 # number 6
-def number_6():
+def return_book():
     # open the files that we will use
     booksInfo = open("booksInfo.txt", "a+")
     booksInfo.seek(0)
@@ -494,7 +497,7 @@ def number_6():
 
 
 # number 7
-def number_7():
+def buy_book():
     # open the files that we will use
     booksInfo = open("booksInfo.txt", "a+")
     booksInfo.seek(0)
@@ -547,7 +550,7 @@ def number_7():
                             new_book = info
                         else:
                             new_book += "," + info
-                    #new_book = new_book + "\n"
+                    # new_book = new_book + "\n"
                     books_info[counter] = new_book
                     booksInfo.close()
                     booksInfo = open("booksInfo.txt", "w+")
@@ -574,7 +577,7 @@ def number_7():
 
 
 # number 8
-def number_8():
+def format_library_info():
     # Ask for the password before delete all information
     password = int(input("Enter The Password: "))
     # if the password is correct delete
@@ -593,7 +596,7 @@ def number_8():
 
 
 # number 9
-def number_9():
+def exit_program():
     print("❤" * 32)
     print("☺ Thanks for using our Library Management System ☺")
     print("❤" * 32)
@@ -611,25 +614,26 @@ def main():
         choice = int(input("Enter your choice: "))
 
         if choice == 1:
-            number_1()
+            print_books_info()
         elif choice == 2:
-            number_2()
+            search_for_book()
         elif choice == 3:
-            number_3()
+            add_new_book()
         elif choice == 4:
-            number_4()
+            remove_book()
         elif choice == 5:
-            number_5()
+            borrow_book()
         elif choice == 6:
-            number_6()
+            return_book()
         elif choice == 7:
-            number_7()
+            buy_book()
         elif choice == 8:
-            number_8()
+            format_library_info()
         elif choice == 9:
-            number_9()
+            exit_program()
             run = False
         else:
             print("Invalid input")
+
 
 main()
