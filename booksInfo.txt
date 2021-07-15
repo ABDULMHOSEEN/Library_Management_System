@@ -2,4 +2,3 @@
 67534,Exploring Data in Python,Charless Russell,67.3,23,2
 20014,Learn Python 3 the Hard Way,Zed Shaw,24.9,5,2
 60214,how to lead a winning team,Eddy Knasel:Graham Willcocks:Steve Morris,70.5,0,4
-12345,erqy,qyer,26134,21,0
