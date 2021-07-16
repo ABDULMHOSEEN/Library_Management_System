@@ -1,6 +1,7 @@
 # First of all I will define the menu with all choices
 menu = "\nLibrary Management System\n" \
        "==============================\n" \
+       "0. Bank Information" \
        "1. Print books info\n" \
        "2. Search for a book\n" \
        "3. Add new book\n" \
@@ -11,17 +12,80 @@ menu = "\nLibrary Management System\n" \
        "8. Format The Library Info\n" \
        "9. Exit\n" \
        "=============================="
+### FOR BANK
+menu_bank = "\nBank Account\n" \
+            "-------------------------\n" \
+            "1. Total money\n" \
+            "2. Best sellers\n" \
+            "3 Number of sales process\n" \
+            "4. Exit\n" \
+            "-------------------------\n"
+
+
+# This function is about reading some information about the bank account
+def bankAccount():
+    main_Bank()
+
+
+# number 1
+def total_money():
+    # Open the file
+    bancaccount = open("BankAccount.txt", "r")
+    # read info
+    bank_account = bancaccount.readline()
+    bank_account = bank_account.strip('\n')
+    print("The library has {} Rial".format(bank_account))
+
+
+# number 2
+def best_sellers():
+    print("coming soon")
+
+
+# number 3
+def number_process_sell():
+    # Open the file
+    booksold = open("booksold.txt", "r")
+    # read info
+    book_sold = booksold.readlines()
+    # set a counter to count the number of sell process
+    counter = 0
+    for line in book_sold:
+        counter += 1
+    # print the output
+    print("The number of sales process is", counter)
+
+
+def main_Bank():
+    # run the main function until the user ask for stop
+    run = True
+    while run:
+        print(menu_bank)
+        choice = int(input("Enter your choice: "))
+        if choice == 1:
+            total_money()
+        elif choice == 2:
+            best_sellers()
+        elif choice == 3:
+            number_process_sell()
+        elif choice == 4:
+            run = False
+        else:
+            print("Invalid input")
+
+
+### FOR BANK
 
 
 # define a function that will add the money after sell
-def bankAccount(price):
+def addMoney(price):
     # Open the file
     bankaccount = open("BankAccount.txt", "a+")
     bankaccount.seek(0)
     # read info
     bank_account = bankaccount.readline()
     # add the money to the account
-    bank_account = str(float(bank_account) + float(price))
+    bank_account = str(round(float(bank_account) + float(price), 3))
     # remove the old total and add the new one
     bankaccount.close()
     bankaccount = open("BankAccount.txt", "w+")
@@ -499,6 +563,7 @@ def return_book():
 # number 7
 def buy_book():
     # open the files that we will use
+    global price
     booksInfo = open("booksInfo.txt", "a+")
     booksInfo.seek(0)
     bookSold = open("booksold.txt", "a+")
@@ -527,7 +592,7 @@ def buy_book():
                 else:
                     print("  -", book[2])
                     price = float(book[3])
-                print("price: ", price)
+                print("price: ", book[3])
                 print("number of available copies: ", book[4])
                 print("##############################################\n")
                 # if there are a copies ask the user for the number of copies that he want
@@ -537,9 +602,9 @@ def buy_book():
                 # Check if there are enough books
                 if int(book[-2]) >= number_of_sold_book:
                     # add the money to the bank account
-                    bankAccount(price * number_of_sold_book)
+                    addMoney(price * number_of_sold_book)
                     # if yes write the sold information
-                    sold_info = "\n" + str(book[0]) + "," + id_number
+                    sold_info = "\n" + str(book[0]) + "," + id_number + "," + str(number_of_sold_book)
                     bookSold.write(sold_info)
                     book[-2] = str(int(book[-2]) - number_of_sold_book)
                     # change the info of the books
@@ -612,8 +677,9 @@ def main():
         print(menu)
         # ask the user to choose a number from the menu
         choice = int(input("Enter your choice: "))
-
-        if choice == 1:
+        if choice == 0:
+            bankAccount()
+        elif choice == 1:
             print_books_info()
         elif choice == 2:
             search_for_book()

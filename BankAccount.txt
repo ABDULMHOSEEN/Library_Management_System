@@ -1,1 +1,15 @@
-148
+149.5
+
+    print("Coming soon")
+    # Open the file
+    booksold = open("booksold.txt", "r")
+    # read info
+    book_sold = booksold.readlines()
+    print(book_sold)
+    # define a best book
+    best_book = ''
+    for serial_number in book_sold:
+        serial_number = serial_number.split(",")
+        print(serial_number[0])
+        best_book = book_sold.count(serial_number[0])
+        print(best_book)
