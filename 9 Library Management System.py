@@ -59,15 +59,17 @@ def get_best_sellers():
     # read info
     book_sold = booksold.readlines()
     dictionary_of_books = {}
+    # make the information as a dict
     for book in book_sold:
         book = book.split(",")
         if int(book[0]) not in dictionary_of_books:
             dictionary_of_books[int(book[0])] = int(book[2])
         else:
             dictionary_of_books[int(book[0])] += int(book[-1])
+    # find the best book that have the best sells
     max_key = max(dictionary_of_books, key=dictionary_of_books.get)
-    print("The best book in the store is", max_key)
-    print("we have sold", dictionary_of_books[max_key],"copies of this book")
+    print("The best book in the store is", find_book(max_key))
+    print("we have sold", dictionary_of_books[max_key], "copies of this book")
 
 # number 3
 def get_number_process_sell():
@@ -77,6 +79,18 @@ def get_number_process_sell():
     book_sold = booksold.readlines()
     # print the output
     print("The number of sales process is", len(book_sold))
+
+def find_book(serial_number):
+    # open the files that we will use
+    booksInfo = open("booksInfo.txt", "r")
+    # store all info inside this value
+    books_info = booksInfo.readlines()
+    # close the file
+    booksInfo.close()
+    for book in books_info:
+        book = book.split(",")
+        if int(serial_number) == int(book[0]):
+            return book[1]
 
 ### FOR BANK
 
