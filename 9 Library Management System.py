@@ -1,7 +1,7 @@
 # First of all I will define the menu with all choices
 menu = "\nLibrary Management System\n" \
        "==============================\n" \
-       "0. Bank Information" \
+       "0. Bank Information\n" \
        "1. Print books info\n" \
        "2. Search for a book\n" \
        "3. Add new book\n" \
@@ -12,23 +12,38 @@ menu = "\nLibrary Management System\n" \
        "8. Format The Library Info\n" \
        "9. Exit\n" \
        "=============================="
+
 ### FOR BANK
 menu_bank = "\nBank Account\n" \
             "-------------------------\n" \
             "1. Total money\n" \
             "2. Best sellers\n" \
-            "3 Number of sales process\n" \
+            "3. Number of sales process\n" \
             "4. Exit\n" \
             "-------------------------\n"
 
 
 # This function is about reading some information about the bank account
 def bankAccount():
-    main_Bank()
+    # run the main function until the user ask for stop
+    run = True
+    while run:
+        print(menu_bank)
+        choice = int(input("Enter your choice: "))
+        if choice == 1:
+            get_total_money()
+        elif choice == 2:
+            get_best_sellers()
+        elif choice == 3:
+            get_number_process_sell()
+        elif choice == 4:
+            run = False
+        else:
+            print("Invalid input")
 
 
 # number 1
-def total_money():
+def get_total_money():
     # Open the file
     bancaccount = open("BankAccount.txt", "r")
     # read info
@@ -38,41 +53,30 @@ def total_money():
 
 
 # number 2
-def best_sellers():
-    print("coming soon")
-
-
-# number 3
-def number_process_sell():
+def get_best_sellers():
     # Open the file
     booksold = open("booksold.txt", "r")
     # read info
     book_sold = booksold.readlines()
-    # set a counter to count the number of sell process
-    counter = 0
-    for line in book_sold:
-        counter += 1
-    # print the output
-    print("The number of sales process is", counter)
-
-
-def main_Bank():
-    # run the main function until the user ask for stop
-    run = True
-    while run:
-        print(menu_bank)
-        choice = int(input("Enter your choice: "))
-        if choice == 1:
-            total_money()
-        elif choice == 2:
-            best_sellers()
-        elif choice == 3:
-            number_process_sell()
-        elif choice == 4:
-            run = False
+    dictionary_of_books = {}
+    for book in book_sold:
+        book = book.split(",")
+        if int(book[0]) not in dictionary_of_books:
+            dictionary_of_books[int(book[0])] = int(book[2])
         else:
-            print("Invalid input")
+            dictionary_of_books[int(book[0])] += int(book[-1])
+    max_key = max(dictionary_of_books, key=dictionary_of_books.get)
+    print("The best book in the store is", max_key)
+    print("we have sold", dictionary_of_books[max_key],"copies of this book")
 
+# number 3
+def get_number_process_sell():
+    # Open the file
+    booksold = open("booksold.txt", "r")
+    # read info
+    book_sold = booksold.readlines()
+    # print the output
+    print("The number of sales process is", len(book_sold))
 
 ### FOR BANK
 
@@ -97,10 +101,11 @@ def addMoney(price):
 # number 1
 def print_books_info():
     # open the files that we will use
-    booksInfo = open("booksInfo.txt", "a+")
-    booksInfo.seek(0)
+    booksInfo = open("booksInfo.txt", "r")
     # store all info inside this value
     books_info = booksInfo.readlines()
+    # close the file
+    booksInfo.close()
     # this choice is about display the info of the book
 
     # count the number of books and print it
@@ -125,7 +130,6 @@ def print_books_info():
             print("total copies: ", total_copies)
             if counter != number_of_books:
                 print("##############################################\n")
-    booksInfo.close()
     # return True to let the while running
     return True
 
@@ -313,7 +317,7 @@ def add_new_book():
         books_info = booksInfo.readlines()
         print("New book was added successfully")
     else:
-        print("New book was not added successfully")
+        print("New book was NOT added successfully")
     booksInfo.close()
     # return True to let the while running
     return True
